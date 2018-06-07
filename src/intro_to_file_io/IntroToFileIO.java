@@ -1,3 +1,6 @@
+//Copyright © 2018 by Nancy G
+//Copyright © 2018 by Nancy G
+
 package intro_to_file_io;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -71,4 +74,3 @@ public class IntroToFileIO {
 		}
 	}
 }
-//Copyright © 2018 by Nancy G//Copyright © 2018 by Nancy G//Copyright © 2018 by Nancy G

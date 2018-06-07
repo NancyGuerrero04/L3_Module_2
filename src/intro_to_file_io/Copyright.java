@@ -1,3 +1,6 @@
+//Copyright © 2018 by Nancy G
+//Copyright © 2018 by Nancy G
+
 package intro_to_file_io;
 
 import java.io.BufferedReader;
@@ -35,30 +38,31 @@ public class Copyright {
 				
 				String s = "";
 				try {
-					BufferedReader br = new BufferedReader(new FileReader(arrayFile[i]));
-					
-					String line = br.readLine();
-					while(line != null){
-						line = br.readLine();
-						s = s+line;
-						System.out.println(line);
+					FileReader fr = new FileReader(arrayFile[i]);
+					int c = fr.read();
+					while(c != -1){
+						System.out.print((char)c);
+						char character = ((char)c);
+						s=s+character;
+						c = fr.read();
+						
+						
 					}
-					
-					br.close();
-				
-				} catch (FileNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					fr.close();
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				
 				
+				
 				try {
-					FileWriter fw = new FileWriter(arrayFile[i], true);
+					FileWriter fw = new FileWriter(arrayFile[i], false);
 
-					fw.write("//Copyright © 2018 by Nancy G"); // Copyright
+					fw.write("//Copyright © 2018 by Nancy G\n"); // Copyright
+					
+					fw.write(s);
 
 					fw.close();
 				} catch (IOException e) {
@@ -70,4 +74,3 @@ public class Copyright {
 
 	}
 }
-// Copyright © 2018 by Nancy G//Copyright © 2018 by Nancy G
