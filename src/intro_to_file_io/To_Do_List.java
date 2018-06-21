@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -65,7 +66,7 @@ public class To_Do_List implements ActionListener {
 		String removeTask = JOptionPane.showInputDialog("Which task have you completed?");
 
 		for (int i = 0; i < tasksList.size(); i++) {
-			if (newTask.get(i).contains(removeTask)) {
+			if (removeTask.contains(tasksList.get(i))) {
 				tasksList.remove(i);
 			}
 
@@ -74,52 +75,75 @@ public class To_Do_List implements ActionListener {
 
 	public void saveTasks() {
 
-		//Write to a file
-		try {
-			FileWriter fw = new FileWriter("src/intro_to_file_io/Tasks_File", true);
+		JFileChooser jfc = new JFileChooser();
+		int returnVal = jfc.showOpenDialog(null);
+		if (returnVal == JFileChooser.APPROVE_OPTION) {
+			String fileName = jfc.getSelectedFile().getAbsolutePath();
+			System.out.println(fileName);
+
+
+			try {
 			
-			/*
-			NOTE: To append to a file that already exists, add true as a second parameter when calling the
-			      FileWriter constructor.
-			      (e.g. FileWriter fw = new FileWriter("src/intro_to_file_io/test2.txt", true);)
-			*/
-			System.out.println(tasksList);
-			
-			
-			//for(int i = 0; i< tasksList.size()) Where I left off: I want to read the lists line by line so that I can print it out without the [] ya know
-			fw.write("" + tasksList);
-			
-				
-			fw.close();
-		} catch (IOException e) {
-			e.printStackTrace();
+				FileWriter fw = new FileWriter(fileName, false);
+				for (int i = 0; i < tasksList.size(); i++) {
+					fw.write("\n" + tasksList.get(i));
+
+				}
+				fw.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
-		
+
 	}
 
-	public void loadTasks() {
+	public void loadTasks() { //The load button will clear the task list and display it 
+		JFileChooser jfc2 = new JFileChooser();
+		int returnVal = jfc2.showOpenDialog(null);
+		if (returnVal == JFileChooser.APPROVE_OPTION) {
+			String fileName2 = jfc2.getSelectedFile().getAbsolutePath();
+			System.out.println(fileName2);
+	
+			
+			try {
+				
+				FileWriter fw = new FileWriter(fileName2, false);
+				
+				fw.write("");
+				fw.close();
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 
+		tasksList.clear();
+		
+		
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		//System.out.println(tasksList);
-		
+		// System.out.println(tasksList);
+
 		if (e.getSource().equals(addButton)) {
 			addTask(); // this.addTask();
 		}
-		
+
 		if (e.getSource().equals(removeButton)) {
 			removeTask();
 		}
-		
+
 		if (e.getSource().equals(saveButton)) {
 			saveTasks();
-			
+
 		}
+		if (e.getSource().equals(loadButton)) {
+			loadTasks();
 
 		}
 
 	}
 
+}
