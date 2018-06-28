@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -22,8 +23,9 @@ public class To_Do_List implements ActionListener {
 	JButton removeButton = new JButton();
 	JButton saveButton = new JButton();
 	JButton loadButton = new JButton();
+	JLabel l = new JLabel();
 
-	public static void main(String[] args) {
+	public static void main(String[] args) { 
 		To_Do_List list = new To_Do_List();
 		list.setup();
 	}
@@ -36,6 +38,10 @@ public class To_Do_List implements ActionListener {
 		f.setVisible(true);
 
 		f.setTitle("To-Do List:");
+		
+		p.add(l);
+		
+		l.setText("");
 
 		p.add(addButton);
 		addButton.setText("Add Task");
@@ -52,14 +58,25 @@ public class To_Do_List implements ActionListener {
 		p.add(loadButton);
 		loadButton.setText("Load");
 		loadButton.addActionListener(this);
+		
 
 		f.pack();
 
 	}
 
+	public void updateTaskLabel() {
+		for (int i = 0; i < tasksList.size(); i++) {
+			l.setText(tasksList.get(i)+ "\n");
+
+		}
+	}
+	
 	public void addTask() {
 		String newTask = JOptionPane.showInputDialog("Enter a task into your To-Do List!");
 		tasksList.add(newTask);
+		
+		updateTaskLabel();
+		
 	}
 
 	public void removeTask() {
@@ -86,7 +103,7 @@ public class To_Do_List implements ActionListener {
 			
 				FileWriter fw = new FileWriter(fileName, false);
 				for (int i = 0; i < tasksList.size(); i++) {
-					fw.write("\n" + tasksList.get(i));
+					fw.write(tasksList.get(i)+ "\n");
 
 				}
 				fw.close();
@@ -116,7 +133,7 @@ public class To_Do_List implements ActionListener {
 				e.printStackTrace();
 			}
 		}
-
+		
 		tasksList.clear();
 		
 		
